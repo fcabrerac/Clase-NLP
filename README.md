@@ -1,2 +1,2 @@
 # Clase-NLP
-Repositorio de mis proyectos del Procesamiento de Lenguaje Natural
+Repositorio de mis proyectos de Procesamiento de Lenguaje Natural
