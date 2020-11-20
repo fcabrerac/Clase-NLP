@@ -1,0 +1,909 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# **Procesamiento de Lenguaje Natural**\n",
+    "\n",
+    "## Taller #2 Adquisición de texto"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Importar librerias \n",
+    "import bs4 as bs"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Punto 1:\n",
+    "\n",
+    "- Descomprimir el archivo '.zip' de los poemas \n",
+    "- Leer cada uno de los archivos \n",
+    "- Responder: ¿Cuál archivo tiene el mayor númenro de palabras?"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Respuesta 1:\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "from zipfile import ZipFile"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "direccion = 'Documents/Clase-NLP/poemas.zip'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Descomprimir el archivo ZIP\n",
+    "with ZipFile(direccion) as archivo:\n",
+    "   archivo.extractall('Documents/Clase-NLP/')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "('Documents/Clase-NLP/poemas', [], ['A un general (Julio Corta╠üzar).txt', 'Aqui╠ü (Octavio Paz).txt', 'Si╠ündrome (Mario Benedetti).txt'])\n"
+     ]
+    }
+   ],
+   "source": [
+    "for archivo in os.walk('Documents/Clase-NLP/poemas'):\n",
+    "    print(archivo)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Archivo tipo txt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'RegiÃ³n de manos sucias de pinceles sin pelo\\n\\nde niÃ±os boca abajo de cepillos de dientes\\n\\nZona donde la rata se ennoblece\\n\\ny hay banderas innÃºmeras y cantan himnos\\n\\ny alguien te prende, hijo de puta,\\n\\nuna medalla sobre el pecho\\n\\nY te pudres lo mismo.'"
+      ]
+     },
+     "execution_count": 77,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "with open(\"Documents/Clase_NLP/poemas/A_un_general_(Julio_Cortazar).txt\") as archivo:\n",
+    "    poema = archivo.read()\n",
+    "poema"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Conteo de palabras"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NumPalabras = poema.split()\n",
+    "\n",
+    "frecuenciaPalab = []\n",
+    "for w in NumPalabras :\n",
+    "    frecuenciaPalab.append(NumPalabras.count(w))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "46"
+      ]
+     },
+     "execution_count": 86,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(frecuenciaPalab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Archivo tipo txt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Mis pasos en esta calle\\n\\nResuenan\\n\\nEn otra calle\\n\\nDonde\\n\\nOigo mis pasos\\n\\nPasar en esta calle\\n\\nDonde\\n\\nSÃ³lo es real la niebla.'"
+      ]
+     },
+     "execution_count": 80,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "with open(\"Documents/Clase_NLP/poemas/Aquino(Octavio_Paz).txt\") as archivo:\n",
+    "    poema2 = archivo.read()\n",
+    "poema2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Conteo de palabras"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 87,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NumPalabras2 = poema2.split()\n",
+    "\n",
+    "frecuenciaPalab2 = []\n",
+    "for w in NumPalabras2 :\n",
+    "    frecuenciaPalab2.append(NumPalabras2.count(w))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 89,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "23"
+      ]
+     },
+     "execution_count": 89,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(frecuenciaPalab2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Archivo tipo txt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 82,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'TodavÃ\\xada tengo casi todos mis dientes\\n\\ncasi todos mis cabellos y poquÃ\\xadsimas canas\\n\\npuedo hacer y deshacer el amor\\n\\ntrepar una escalera de dos en dos\\n\\ny correr cuarenta metros detrÃ¡s del Ã³mnibus\\n\\no sea que no deberÃ\\xada sentirme viejo\\n\\npero el grave problema es que antes\\n\\nno me fijaba en estos detalles.'"
+      ]
+     },
+     "execution_count": 82,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "with open(\"Documents/Clase_NLP/poemas/Sindrome(Mario_Benedetti).txt\") as archivo:\n",
+    "    poema3 = archivo.read()\n",
+    "poema3"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Conteo de palabras"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "NumPalabras3 = poema3.split()\n",
+    "\n",
+    "frecuenciaPalab3 = []\n",
+    "for w in NumPalabras3 :\n",
+    "    frecuenciaPalab3.append(NumPalabras3.count(w))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 90,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "53"
+      ]
+     },
+     "execution_count": 90,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "len(frecuenciaPalab3)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Punto 2:"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "- Hacer Web Scraping de 10 biografías en Wikipedia (en búcle) \n",
+    "- Obtener el **encabezado** de cada bibliografia \n",
+    "- Obtener todos los **contenidos** y **etiquetas de títulos** asociados a los **links** del primer párrafo  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Respuesta 2:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 359,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Importar libreria \n",
+    "import urllib.request\n",
+    "import bs4 as bs # Beautiful Soup"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Web Scraping "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Jeff Bezos"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 310,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "link = \"https://es.wikipedia.org/wiki/Jeff_Bezos\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 238,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Descargar página web en Python \n",
+    "request = urllib.request.urlopen(link)\n",
+    "fuente = request.read()# Al hacerle print genera cod HTML\n",
+    "request.close()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Ahora tenemos que procesar la página Web como HTML"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 242,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Jeff Bezos']"
+      ]
+     },
+     "execution_count": 242,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "html = bs.BeautifulSoup(fuente,'html.parser')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 246,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Jeff Bezos - Wikipedia, la enciclopedia libre']"
+      ]
+     },
+     "execution_count": 246,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Etiqueta title\n",
+    "html.find(\"title\").contents"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 340,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Trae todos los links del primer parrafo\n",
+    "links = html.find(id=\"bodyContent\").find(\"p\").find_all(\"a\")\n",
+    "#Extrallendo las etiqetas \n",
+    "\n",
+    "for link in links:\n",
+    "    print('***********')\n",
+    "    print(link.contents)\n",
+    "    print('')\n",
+    "    print(link.get_text())\n",
+    "    print('')\n",
+    "    print(link)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Web Scraping 10 biografias"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 361,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n",
+      "***********\n",
+      "['Albuquerque']\n",
+      "\n",
+      "Albuquerque\n",
+      "\n",
+      "<a class=\"mw-redirect\" href=\"/wiki/Albuquerque_(Nuevo_M%C3%A9xico)\" title=\"Albuquerque (Nuevo México)\">Albuquerque</a>\n",
+      "***********\n",
+      "['Nuevo México']\n",
+      "\n",
+      "Nuevo México\n",
+      "\n",
+      "<a href=\"/wiki/Nuevo_M%C3%A9xico\" title=\"Nuevo México\">Nuevo México</a>\n",
+      "***********\n",
+      "['estadounidense']\n",
+      "\n",
+      "estadounidense\n",
+      "\n",
+      "<a href=\"/wiki/Estados_Unidos\" title=\"Estados Unidos\">estadounidense</a>\n",
+      "***********\n",
+      "['director ejecutivo']\n",
+      "\n",
+      "director ejecutivo\n",
+      "\n",
+      "<a href=\"/wiki/Director_ejecutivo\" title=\"Director ejecutivo\">director ejecutivo</a>\n",
+      "***********\n",
+      "['Amazon']\n",
+      "\n",
+      "Amazon\n",
+      "\n",
+      "<a href=\"/wiki/Amazon\" title=\"Amazon\">Amazon</a>\n",
+      "***********\n",
+      "[<span class=\"corchete-llamada\">[</span>, '2', <span class=\"corchete-llamada\">]</span>]\n",
+      "\n",
+      "[2]\n",
+      "\n",
+      "<a href=\"#cite_note-2\"><span class=\"corchete-llamada\">[</span>2<span class=\"corchete-llamada\">]</span></a>\n"
+     ]
+    }
+   ],
+   "source": [
+    "links = [\"https://es.wikipedia.org/wiki/Jeff_Bezos\",\n",
+    "         \"https://es.wikipedia.org/wiki/Bill_Gates\",\n",
+    "         \"https://es.wikipedia.org/wiki/Warren_Buffett\",\n",
+    "         \"https://es.wikipedia.org/wiki/Bernard_Arnault\",\n",
+    "         \"https://es.wikipedia.org/wiki/Carlos_Slim\",\n",
+    "         \"https://es.wikipedia.org/wiki/Amancio_Ortega\",\n",
+    "         \"https://es.wikipedia.org/wiki/Lawrence_J._Ellison\",\n",
+    "         \"https://es.wikipedia.org/wiki/Mark_Zuckerberg\",\n",
+    "         \"https://es.wikipedia.org/wiki/Michael_Bloomberg\",\n",
+    "         \"https://es.wikipedia.org/wiki/Larry_Page\"]\n",
+    "\n",
+    "\n",
+    "for pagina in links:\n",
+    "    \n",
+    "    request = urllib.request.urlopen(pagina)\n",
+    "    source = request.read()\n",
+    "    request.close()\n",
+    "    html = bs.BeautifulSoup(fuente,'html.parser')\n",
+    "\n",
+    "    \n",
+    "    links = html.find(id=\"bodyContent\").find(\"p\").find_all(\"a\") \n",
+    "\n",
+    "    for link in links:\n",
+    "        print('***********')\n",
+    "        print(link.contents)\n",
+    "        print('')\n",
+    "        print(link.get_text())\n",
+    "        print('')\n",
+    "        print(link)\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
